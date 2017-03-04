@@ -72,7 +72,7 @@
       <OutputFile>$(OutDir)/FLIM_sum_data.exe</OutputFile>
     </Link>
     <CudaCompile>
-      <CodeGeneration>compute_11,sm_11</CodeGeneration>
+      <CodeGeneration>compute_12,sm_12;compute_20,sm_20</CodeGeneration>
       <AdditionalOptions>-Xcompiler "/wd 4819" %(AdditionalOptions)</AdditionalOptions>
       <Include>./;../../common/inc</Include>
       <Defines>WIN32</Defines>
@@ -110,6 +110,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <CudaCompile Include="FLIM_sum_data.cu" />
+    <ClCompile Include="FLIM_sum_data.cpp" />
     <ClCompile Include="FLIM_sum_data_cpu.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
