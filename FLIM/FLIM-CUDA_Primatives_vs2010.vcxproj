@@ -4,9 +4,17 @@
     <CUDAPropsPath Condition="'$(CUDAPropsPath)'==''">$(VCTargetsPath)\BuildCustomizations</CUDAPropsPath>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
@@ -14,16 +22,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{1FCEA725-FCE3-42FF-A447-540A7219190D}</ProjectGuid>
-    <RootNamespace>FLIM_sum_data_vs2015</RootNamespace>
-    <ProjectName>FLIM_sum_data</ProjectName>
+    <ProjectGuid>{55F71337-32A6-4C26-8CBA-A06A9183D6F2}</ProjectGuid>
+    <RootNamespace>template_vs2010</RootNamespace>
+    <ProjectName>template</ProjectName>
     <CudaToolkitCustomDir />
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup>
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <UseDebugLibraries>true</UseDebugLibraries>
@@ -33,7 +40,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
-    <Import Project="$(CUDAPropsPath)\CUDA 8.0.props" />
+    <Import Project="$(CUDAPropsPath)\CUDA 6.5.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" />
@@ -45,6 +52,9 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules />
     <CodeAnalysisRuleAssemblies />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)'=='Win32'">
+    <OutDir>../../bin/win32/$(Configuration)/</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Platform)'=='x64'">
     <OutDir>../../bin/win64/$(Configuration)/</OutDir>
@@ -59,10 +69,10 @@
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>cudart_static.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(CudaToolkitLibDir);</AdditionalLibraryDirectories>
-      <OutputFile>$(OutDir)/FLIM_sum_data.exe</OutputFile>
+      <OutputFile>$(OutDir)/template.exe</OutputFile>
     </Link>
     <CudaCompile>
-      <CodeGeneration>compute_20,sm_20;compute_30,sm_30;compute_35,sm_35;compute_37,sm_37;compute_50,sm_50;compute_52,sm_52;compute_60,sm_60;</CodeGeneration>
+      <CodeGeneration>compute_12,sm_12;compute_20,sm_20</CodeGeneration>
       <AdditionalOptions>-Xcompiler "/wd 4819" %(AdditionalOptions)</AdditionalOptions>
       <Include>./;../../common/inc</Include>
       <Defines>WIN32</Defines>
@@ -76,11 +86,14 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">-j8 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <CudaCompile>
       <Runtime>MTd</Runtime>
-      <TargetMachinePlatform>64</TargetMachinePlatform>
     </CudaCompile>
+    <CudaLink>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">-j8 %(AdditionalOptions)</AdditionalOptions>
+    </CudaLink>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
     <ClCompile>
@@ -93,16 +106,15 @@
     </Link>
     <CudaCompile>
       <Runtime>MT</Runtime>
-      <TargetMachinePlatform>64</TargetMachinePlatform>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CudaCompile Include="FLIM_sum_data.cu" />
-    <ClCompile Include="FLIM_sum_data.cpp" />
-    <ClCompile Include="FLIM_sum_data_cpu.cpp" />
+    <CudaCompile Include="template.cu" />
+    <ClCompile Include="template.cpp" />
+    <ClCompile Include="template_cpu.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="$(CUDAPropsPath)\CUDA 8.0.targets" />
+    <Import Project="$(CUDAPropsPath)\CUDA 6.5.targets" />
   </ImportGroup>
 </Project>

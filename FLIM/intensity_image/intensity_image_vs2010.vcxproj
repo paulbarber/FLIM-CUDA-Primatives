@@ -22,9 +22,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{55F71337-32A6-4C26-8CBA-A06A9183D6F2}</ProjectGuid>
-    <RootNamespace>FLIM_sum_data_vs2010</RootNamespace>
-    <ProjectName>FLIM_sum_data</ProjectName>
+    <ProjectGuid>{08EC7FC1-F3B8-4CA3-B1A3-51060769A53F}</ProjectGuid>
+    <RootNamespace>intensity_image_vs2010</RootNamespace>
+    <ProjectName>intensity_image</ProjectName>
     <CudaToolkitCustomDir />
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -69,7 +69,7 @@
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>cudart_static.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(CudaToolkitLibDir);</AdditionalLibraryDirectories>
-      <OutputFile>$(OutDir)/FLIM_sum_data.exe</OutputFile>
+      <OutputFile>$(OutDir)/intensity_image.exe</OutputFile>
     </Link>
     <CudaCompile>
       <CodeGeneration>compute_12,sm_12;compute_20,sm_20</CodeGeneration>
@@ -109,9 +109,9 @@
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CudaCompile Include="FLIM_sum_data.cu" />
-    <ClCompile Include="FLIM_sum_data.cpp" />
-    <ClCompile Include="FLIM_sum_data_cpu.cpp" />
+    <CudaCompile Include="intensity_image.cu" />
+    <ClCompile Include="intensity_image.cpp" />
+    <ClCompile Include="intensity_image_cpu.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

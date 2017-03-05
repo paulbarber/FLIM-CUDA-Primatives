@@ -12,9 +12,9 @@
  *
  * @param g_idata   input data in global memory
  * @param g_odata   output data in global memory
- * @param ntimepts  number of time points in a transient - the first dimention of the data
- * @param width     width of image - the second dimention of the data
- * @param height    height of image - the third dimention of the data
+ * @param ntimepts  number of time points in a transient - the first dimension of the data
+ * @param width     width of image - the second dimension of the data
+ * @param height    height of image - the third dimension of the data
  */
 __global__ void
 CudaKernel(float *g_idata, float *g_odata, size_t ntimepts, size_t width, size_t height)
@@ -23,11 +23,6 @@ CudaKernel(float *g_idata, float *g_odata, size_t ntimepts, size_t width, size_t
 	int y = blockIdx.x;    // The block indicates the row
     int x = threadIdx.x;   // The thread in the block indicates the col
 	
-	//size_t pixel_pitch = g_idata->pitch;
-	//size_t width_pitch = pixel_pitch * width;
-	//char *row_start = (char*)g_idata->ptr + y * width_pitch;  // is char* because width_pitch is in bytes
-	//float *trans = (float*)(row_start + x * pixel_pitch);
-
 	float *row_start = g_idata + y * width;
 	float *trans = row_start + x;
 
