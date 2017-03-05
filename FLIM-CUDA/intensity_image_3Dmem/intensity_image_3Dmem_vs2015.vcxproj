@@ -14,7 +14,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{1FCEA725-FCE3-42FF-A447-540A7219190D}</ProjectGuid>
+    <ProjectGuid>{158AF27B-529F-4B42-9A3D-D7AB5DCD15E3}</ProjectGuid>
     <RootNamespace>intensity_image_3Dmem_vs2015</RootNamespace>
     <ProjectName>intensity_image_3Dmem</ProjectName>
     <CudaToolkitCustomDir />

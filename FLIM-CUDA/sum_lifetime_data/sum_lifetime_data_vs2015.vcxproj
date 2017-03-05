@@ -14,7 +14,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{1FCEA725-FCE3-42FF-A447-540A7219190D}</ProjectGuid>
+    <ProjectGuid>{E07EFE49-3441-4E2B-A48A-594B92979472}</ProjectGuid>
     <RootNamespace>sum_lifetime_data_vs2015</RootNamespace>
     <ProjectName>sum_lifetime_data</ProjectName>
     <CudaToolkitCustomDir />
