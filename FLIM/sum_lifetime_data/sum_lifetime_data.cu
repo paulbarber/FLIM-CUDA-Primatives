@@ -23,6 +23,9 @@ CudaKernel(float *g_idata, float *g_odata, size_t ntimepts, size_t width, size_t
 	int y = blockIdx.x;    // The block indicates the row
     int x = threadIdx.x;   // The thread in the block indicates the col
 	
+	// TODO - Code here :-)
+	// This may have one thread per entry in the output array (256), and each one strides through the data in global mem adding them together
+	// OR it may have one thread per pixel, and each one takes its lifetime data and adds it to the output array in shared memory, need to use atomic adds.
 }
 
 ////////////////////////////////////////////////////////////////////////////////
