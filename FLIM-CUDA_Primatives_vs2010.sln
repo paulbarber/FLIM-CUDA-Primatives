@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "intensity_image", "FLIM-CUDA\intensity_image\intensity_image_vs2010.vcxproj", "{08EC7FC1-F3B8-4CA3-B1A3-51060769A53F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "intensity_image_3Dmem", "FLIM-CUDA\intensity_image_3Dmem\intensity_image_3Dmem_vs2010.vcxproj", "{6EE2CA48-8E42-45B1-B696-2B8CF1DA6D07}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sum_lifetime_data", "FLIM-CUDA\sum_lifetime_data\sum_lifetime_data_vs2010.vcxproj", "{55F71337-32A6-4C26-8CBA-A06A9183D6F2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{08EC7FC1-F3B8-4CA3-B1A3-51060769A53F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{08EC7FC1-F3B8-4CA3-B1A3-51060769A53F}.Debug|Win32.Build.0 = Debug|Win32
+		{08EC7FC1-F3B8-4CA3-B1A3-51060769A53F}.Debug|x64.ActiveCfg = Debug|x64
+		{08EC7FC1-F3B8-4CA3-B1A3-51060769A53F}.Debug|x64.Build.0 = Debug|x64
+		{08EC7FC1-F3B8-4CA3-B1A3-51060769A53F}.Release|Win32.ActiveCfg = Release|Win32
+		{08EC7FC1-F3B8-4CA3-B1A3-51060769A53F}.Release|Win32.Build.0 = Release|Win32
+		{08EC7FC1-F3B8-4CA3-B1A3-51060769A53F}.Release|x64.ActiveCfg = Release|x64
+		{08EC7FC1-F3B8-4CA3-B1A3-51060769A53F}.Release|x64.Build.0 = Release|x64
+		{6EE2CA48-8E42-45B1-B696-2B8CF1DA6D07}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6EE2CA48-8E42-45B1-B696-2B8CF1DA6D07}.Debug|Win32.Build.0 = Debug|Win32
+		{6EE2CA48-8E42-45B1-B696-2B8CF1DA6D07}.Debug|x64.ActiveCfg = Debug|x64
+		{6EE2CA48-8E42-45B1-B696-2B8CF1DA6D07}.Debug|x64.Build.0 = Debug|x64
+		{6EE2CA48-8E42-45B1-B696-2B8CF1DA6D07}.Release|Win32.ActiveCfg = Release|Win32
+		{6EE2CA48-8E42-45B1-B696-2B8CF1DA6D07}.Release|Win32.Build.0 = Release|Win32
+		{6EE2CA48-8E42-45B1-B696-2B8CF1DA6D07}.Release|x64.ActiveCfg = Release|x64
+		{6EE2CA48-8E42-45B1-B696-2B8CF1DA6D07}.Release|x64.Build.0 = Release|x64
+		{55F71337-32A6-4C26-8CBA-A06A9183D6F2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{55F71337-32A6-4C26-8CBA-A06A9183D6F2}.Debug|Win32.Build.0 = Debug|Win32
+		{55F71337-32A6-4C26-8CBA-A06A9183D6F2}.Debug|x64.ActiveCfg = Debug|x64
+		{55F71337-32A6-4C26-8CBA-A06A9183D6F2}.Debug|x64.Build.0 = Debug|x64
+		{55F71337-32A6-4C26-8CBA-A06A9183D6F2}.Release|Win32.ActiveCfg = Release|Win32
+		{55F71337-32A6-4C26-8CBA-A06A9183D6F2}.Release|Win32.Build.0 = Release|Win32
+		{55F71337-32A6-4C26-8CBA-A06A9183D6F2}.Release|x64.ActiveCfg = Release|x64
+		{55F71337-32A6-4C26-8CBA-A06A9183D6F2}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
