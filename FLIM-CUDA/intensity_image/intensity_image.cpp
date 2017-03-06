@@ -60,7 +60,7 @@ runTest(int argc, char **argv)
     // allocate host memory
 	float *h_idata = (float*)malloc(mem_size); 
 
-    // initalize the memory, using the recommend way to access cudaPitchedPtr data
+    // initalize the memory
 	for (size_t y = 0; y < height; ++y)
     {
 		float *row_start = h_idata + y * width * ntimepts;

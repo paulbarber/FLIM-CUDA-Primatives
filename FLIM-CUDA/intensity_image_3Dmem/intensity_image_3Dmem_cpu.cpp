@@ -4,6 +4,9 @@
  * CPU Comparison code.
  */
 
+// includes CUDA
+#include <cuda_runtime.h>
+
 ////////////////////////////////////////////////////////////////////////////////
 /*! CPU Gold Standard to sum the time data at each pixel to produce an intensity image
  *
@@ -14,15 +17,20 @@
  * @param height    height of image - the third dimension of the data
  */
 extern "C" void
-computeGold(float *idata, float *odata, size_t ntimepts, size_t width, size_t height)
+computeGold(cudaPitchedPtr *idata, float *odata, size_t ntimepts, size_t width, size_t height)
 {
 
-	for(size_t y=0; y<height; ++y){
-		float *row_start = idata + y * width;
-		for(size_t x=0; x<width; ++x){
-			float *trans = row_start + x;
+	size_t pixel_pitch = idata->pitch;  // in bytes
+	size_t width_pitch = pixel_pitch * width;
+	for (size_t y = 0; y < height; ++y)
+    {
+		char *row_start = (char*)idata->ptr + y * width_pitch;  // is char* because width_pitch is in bytes
+		for (unsigned int x = 0; x < width; ++x)
+		{
+			float *trans = (float*)(row_start + x * pixel_pitch);
 			float sum = 0.0;
-			for(size_t t=0; t<ntimepts; ++t){
+			for (unsigned int t = 0; t < ntimepts; ++t)
+			{
 				sum += *trans;
 				trans++;
 			}

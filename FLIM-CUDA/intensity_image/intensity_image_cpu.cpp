@@ -17,12 +17,15 @@ extern "C" void
 computeGold(float *idata, float *odata, size_t ntimepts, size_t width, size_t height)
 {
 
-	for(size_t y=0; y<height; ++y){
-		float *row_start = idata + y * width;
-		for(size_t x=0; x<width; ++x){
-			float *trans = row_start + x;
+	for (size_t y = 0; y < height; ++y)
+    {
+		float *row_start = idata + y * width * ntimepts;
+		for (unsigned int x = 0; x < width; ++x)
+		{
+			float *trans = row_start + x * ntimepts;
 			float sum = 0.0;
-			for(size_t t=0; t<ntimepts; ++t){
+			for (unsigned int t = 0; t < ntimepts; ++t)
+			{
 				sum += *trans;
 				trans++;
 			}
