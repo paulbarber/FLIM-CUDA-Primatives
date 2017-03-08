@@ -11,12 +11,14 @@
 #include <math.h>
 #include <time.h>
 
-// includes CUDA
+// includes, CUDA
 #include <cuda_runtime.h>
 
 // includes, project
 #include <helper_cuda.h>
 #include <helper_functions.h> // helper functions for SDK examples
+
+#include "../../libics/inc/libics.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // declarations, forward
@@ -37,6 +39,12 @@ int
 runTest(int argc, char **argv)
 {
     bool bTestResult = true;
+	ICS *icsHandle;
+	Ics_Error icsError;
+	Ics_DataType dataType;
+	size_t bufSize;
+	int ndims;
+	size_t dims[ICS_MAXDIM], ntimepts, width, height;
 
     printf("%s Starting...\n\n", argv[0]);
 
@@ -51,27 +59,61 @@ runTest(int argc, char **argv)
     // use command-line specified CUDA device, otherwise use device with highest Gflops/s
     int devID = findCudaDevice(argc, (const char **)argv);
 
-    size_t width = 128;
-    size_t height = 128;
-    size_t ntimepts = 256;
+ //   size_t width = 128;
+ //   size_t height = 128;
+ //   size_t ntimepts = 256;
+	//size_t mem_size = height * width * ntimepts * sizeof(float);
+	//size_t image_size = height * width * sizeof(float);
+	//
+ //   // allocate host memory
+	//float *h_idata = (float*)malloc(mem_size); 
+
+    // initalize the memory
+	//for (size_t y = 0; y < height; ++y)
+ //   {
+	//	float *row_start = h_idata + y * width * ntimepts;
+	//	for (unsigned int x = 0; x < width; ++x)
+	//	{
+	//		float *time = row_start + x * ntimepts;
+	//		for (unsigned int t = 0; t < ntimepts; ++t)
+	//		{
+	//			time[t] = (float)(255-t);
+	//		}
+	//	}
+	//}
+
+	// load an image
+	char filename[] = "../../data/Csarseven.ics";
+	icsError = IcsOpen(&icsHandle, filename, "r");
+	if (icsError != IcsErr_Ok)
+	{
+		printf("Could not open %s: %s\n", filename, IcsGetErrorText(icsError));
+		goto OpenError;
+	}
+
+	IcsGetLayout(icsHandle, &dataType, &ndims, dims);
+	bufSize = IcsGetDataSize(icsHandle);
+	ntimepts = dims[0];
+	width = dims[1];
+	height = dims[2];
+
 	size_t mem_size = height * width * ntimepts * sizeof(float);
 	size_t image_size = height * width * sizeof(float);
+	size_t total_pixels = height * width;
 	
     // allocate host memory
 	float *h_idata = (float*)malloc(mem_size); 
+	unsigned short *data = (unsigned short *)malloc(bufSize);
+	icsError = IcsGetData(icsHandle, data, bufSize);
+	if (icsError != IcsErr_Ok)
+	{
+		printf("IcsGetData error: %s\n", IcsGetErrorText(icsError));
+		goto GetDataError;
+	}
 
-    // initalize the memory
-	for (size_t y = 0; y < height; ++y)
-    {
-		float *row_start = h_idata + y * width * ntimepts;
-		for (unsigned int x = 0; x < width; ++x)
-		{
-			float *time = row_start + x * ntimepts;
-			for (unsigned int t = 0; t < ntimepts; ++t)
-			{
-				time[t] = (float)(255-t);
-			}
-		}
+	// convert data to float
+	for (size_t t = 0; t < total_pixels*ntimepts; t++) {
+		h_idata[t] = (float)data[t];
 	}
 
     sdkStartTimer(&hostToDeviceTimer);
@@ -118,12 +160,29 @@ runTest(int argc, char **argv)
     sdkDeleteTimer(&timer);
     sdkDeleteTimer(&DeviceToHostTimer);
 
+	// Save result image
+	ICS *icsOutHandle;
+	size_t outDims[2];
+	outDims[0] = height;
+	outDims[1] = width;
+
+	IcsOpen(&icsOutHandle, "../../data/intensity_image_GPU.ics", "w2");
+	IcsSetLayout(icsOutHandle, Ics_real32, 2, outDims);
+	IcsSetData(icsOutHandle, h_odata, image_size);
+	IcsClose(icsOutHandle);
+
     // compute reference solution
     float *reference = (float *) malloc(image_size);
 	printf("CPU:\n");
 	time_this(computeGold(h_idata, reference, ntimepts, width, height));
 
-    // check result
+	IcsOpen(&icsOutHandle, "../../data/intensity_image_CPU.ics", "w2");
+	IcsSetLayout(icsOutHandle, Ics_real32, 2, outDims);
+	IcsSetData(icsOutHandle, reference, image_size);
+	IcsClose(icsOutHandle);
+
+	
+	// check result
     //if (checkCmdLineFlag(argc, (const char **) argv, "regression"))
     //{
     //    // write file for regression test
@@ -149,7 +208,12 @@ runTest(int argc, char **argv)
     // profiled. Calling cudaDeviceReset causes all profile data to be
     // flushed before the application exits   
     cudaDeviceReset();
-	
+
+	GetDataError:
+	free(data);
+	IcsClose(icsHandle);
+
+	OpenError:
 	return(bTestResult ? EXIT_SUCCESS : EXIT_FAILURE);
 }
 
@@ -159,9 +223,6 @@ int
 main(int argc, char **argv)
 {
     int ret = runTest(argc, argv);
- 
-	printf("Press a key to finish.\n");
-	getc(stdin);
 
 	exit(ret);
 }

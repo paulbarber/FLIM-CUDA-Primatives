@@ -23,8 +23,8 @@ CudaKernel(float *g_idata, float *g_odata, size_t ntimepts, size_t width, size_t
 	int y = blockIdx.x;    // The block indicates the row
     int x = threadIdx.x;   // The thread in the block indicates the col
 	
-	float *row_start = g_idata + y * width;
-	float *trans = row_start + x;
+	float *row_start = g_idata + y * width * ntimepts;
+	float *trans = row_start + x * ntimepts;
 
 	float sum = 0.0;
 	for(size_t t=0; t<ntimepts; ++t){
