@@ -125,23 +125,30 @@ runTest(int argc, char **argv)
 	// copy host memory to device
     checkCudaErrors(cudaMemcpy(d_idata, h_idata, mem_size, cudaMemcpyHostToDevice));
 
+	sdkStopTimer(&hostToDeviceTimer);
+
 	// allocate device memory for result
     float *d_odata;
     checkCudaErrors(cudaMalloc((void **) &d_odata, image_size));
 
-    sdkStopTimer(&hostToDeviceTimer);
-    sdkStartTimer(&timer);
-
     // setup execution parameters
 	unsigned int  threadsPerBlock = (unsigned int)width;
-    unsigned int  blocksPerGrid = (unsigned int)(width*height) / threadsPerBlock;
-	executeCudaKernel(blocksPerGrid, threadsPerBlock, d_idata, d_odata, ntimepts, width, height);
+    unsigned int  blocksPerGrid = ((unsigned int)(width*height) + threadsPerBlock - 1) / threadsPerBlock;
 
-    sdkStopTimer(&timer);
-    sdkStartTimer(&DeviceToHostTimer);
+	// Warm-up
+	executeCudaKernel(blocksPerGrid, threadsPerBlock, d_idata, d_odata, ntimepts, width, height);
+	checkCudaErrors(cudaDeviceSynchronize());
+
+    sdkStartTimer(&timer);
+
+	executeCudaKernel(blocksPerGrid, threadsPerBlock, d_idata, d_odata, ntimepts, width, height);
+	checkCudaErrors(cudaDeviceSynchronize());
 	
     // check if kernel execution generated and error
     getLastCudaError("Kernel execution failed");
+
+	sdkStopTimer(&timer);
+	sdkStartTimer(&DeviceToHostTimer);
 
     // allocate mem for the result on host side
     float *h_odata = (float *) malloc(image_size);
